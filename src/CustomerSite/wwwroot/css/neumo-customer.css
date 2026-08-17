@@ -164,6 +164,8 @@ body.neumo-body .neumo-page-title {
   background: var(--neumo-breadcrumb-bg);
   border-bottom: 1px solid var(--neumo-breadcrumb-border);
   padding: 10px 24px;
+  position: relative;
+  z-index: 2;
 }
 
 .neumo-portal-breadcrumb .neumo-portal-wrap {
@@ -254,15 +256,27 @@ body.neumo-body .neumo-page-title {
 }
 
 /* Full-bleed white band: the layout renders this inside Bootstrap's
-   .container, so it is pulled back out to the viewport edges here rather
-   than unconstraining the shared container. */
+   .container. Paint the band with a pseudo-element so the header box
+   itself stays in-flow and cannot overlay the portal nav / steal clicks. */
 .neumo-brand-header {
   padding: 36px 0 28px;
   border-bottom: 1px solid var(--neumo-line);
   background: #ffffff;
+  position: relative;
+}
+
+.neumo-brand-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
   width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
+  margin-left: -50vw;
+  background: #ffffff;
+  border-bottom: 1px solid var(--neumo-line);
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* Setup Underway (Home) */
