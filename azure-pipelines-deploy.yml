@@ -1,0 +1,76 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr: none  # never runs on PRs, only on merged commits to main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  azureServiceConnection: 'saas-accelerator-prod-connection'
+  adminSiteAppName: 'neumosaasaccelerator-admin'
+  customerSiteAppName: 'neumosaasaccelerator-portal'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: BuildAndPublish
+        steps:
+          - task: UseDotNet@2
+            inputs:
+              packageType: 'sdk'
+              version: '8.x'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Publish AdminSite'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: 'src/AdminSite/AdminSite.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/AdminSite'
+              zipAfterPublish: true
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Publish CustomerSite'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: 'src/CustomerSite/CustomerSite.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/CustomerSite'
+              zipAfterPublish: true
+
+          - publish: '$(Build.ArtifactStagingDirectory)'
+            artifact: drop
+
+  - stage: Deploy
+    dependsOn: Build
+    jobs:
+      - deployment: DeployToAzure
+        environment: 'production'   # this triggers the manual approval gate
+        pool:
+          vmImage: 'ubuntu-latest'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+
+                - task: AzureWebApp@1
+                  displayName: 'Deploy AdminSite'
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    appType: 'webApp'
+                    appName: '$(adminSiteAppName)'
+                    package: '$(Pipeline.Workspace)/drop/AdminSite/**/*.zip'
+
+                - task: AzureWebApp@1
+                  displayName: 'Deploy CustomerSite'
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    appType: 'webApp'
+                    appName: '$(customerSiteAppName)'
+                    package: '$(Pipeline.Workspace)/drop/CustomerSite/**/*.zip'
