@@ -1,0 +1,408 @@
+/* Neumo Admin Portal — brand color, type and logo layer.
+   Loaded last so it re-skins the existing admin markup without changing structure.
+   Palette per Neumo Brand Guidelines (Colors, p.19-20):
+   Purple #775ED3 · Lilac #DACDF2 · Cool White #F7F2F9 · Navy #0A1128 · Sunflower #EFE745
+   Brand gradient #AEA7F4 -> #7349F3
+   Type per Typography (p.15-16): Aptos Display headings, Aptos / Source Sans 3 body. */
+
+:root {
+    --neumo-purple: #775ED3;
+    --neumo-purple-dark: #5B44B0;
+    --neumo-purple-light: #F0EAFB;
+    --neumo-lilac: #DACDF2;
+    --neumo-navy: #0A1128;
+    --neumo-navy-soft: #16203D;
+    --neumo-sunflower: #EFE745;
+    --neumo-gradient: linear-gradient(90deg, #AEA7F4 0%, #7349F3 100%);
+    --neumo-ink: #0A1128;
+    --neumo-gray: #5C6274;
+    --neumo-line: #E4DFF3;
+    --neumo-bg: #F7F2F9;
+    --neumo-link: #5B44B0;
+    --neumo-body-font: 'Aptos', 'Source Sans 3', 'Source Sans Pro', Calibri, 'Segoe UI', Arial, sans-serif;
+    --neumo-display-font: 'Aptos Display', 'Aptos', 'Source Sans 3', 'Segoe UI', Arial, sans-serif;
+}
+
+html,
+body {
+    font-family: var(--neumo-body-font) !important;
+    background-color: var(--neumo-bg);
+    color: var(--neumo-ink) !important;
+}
+
+.mycontainer,
+.class2 {
+    background: var(--neumo-bg);
+}
+
+h1, h2, h3, h4, h5, h6,
+.display-4,
+.page-title h1,
+.page-title-header h1,
+.cm-section-heading {
+    font-family: var(--neumo-display-font) !important;
+    color: var(--neumo-ink);
+}
+
+.cm-section-heading {
+    color: var(--neumo-ink);
+}
+
+a {
+    color: var(--neumo-link);
+}
+
+a:hover,
+a:focus {
+    color: var(--neumo-purple-dark);
+}
+
+/* Top bar */
+.cm-top-nav-bar {
+    background-color: var(--neumo-navy) !important;
+    border-bottom: 3px solid transparent;
+    border-image: var(--neumo-gradient) 1;
+}
+
+.cm-top-nav-bar .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Logotype is placed as-is: no recolor, outline, shadow or opacity (Logo Don'ts, p.9) */
+.cm-logo {
+    max-height: 20px;
+    width: auto;
+    border-style: none;
+}
+
+.cm-username {
+    border-right: solid 1px rgba(255, 255, 255, 0.35);
+}
+
+/* Side navigation */
+.class1 {
+    background-color: var(--neumo-navy) !important;
+}
+
+.nav-underline .nav-link {
+    font-family: var(--neumo-body-font);
+    color: var(--neumo-lilac);
+}
+
+    .nav-underline .nav-link:hover {
+        background-color: var(--neumo-navy-soft);
+        color: #ffffff;
+    }
+
+.nav-underline .nav-link:hover svg [fill="#DACDF2"],
+.nav-underline .nav-link:hover svg[fill="#DACDF2"] {
+    fill: #ffffff;
+}
+
+.nav-underline .active {
+    color: #ffffff;
+}
+
+@media (max-width: 991.98px) {
+    .offcanvas-collapse {
+        background-color: var(--neumo-navy);
+    }
+}
+
+/* Cards / panels */
+.customcards,
+.card {
+    background-color: #ffffff;
+    border-color: var(--neumo-line);
+}
+
+.card-header {
+    background-color: var(--neumo-purple-light);
+    border-bottom-color: var(--neumo-line);
+    color: var(--neumo-ink);
+}
+
+.cm-panel-default {
+    background: #ffffff !important;
+    border: 1px solid var(--neumo-line);
+}
+
+/* Home quicklinks — brand accents only, sunflower reserved as a single pop (p.21) */
+#homepage-programs > li {
+    background-color: #ffffff;
+    border-radius: 6px;
+}
+
+#homepage-programs > li#onedash-menu-homepage1 {
+    border-color: var(--neumo-purple);
+}
+
+#homepage-programs > li#onedash-menu-homepage2 {
+    border-color: var(--neumo-purple-dark);
+}
+
+#homepage-programs > li#onedash-menu-homepage3 {
+    border-color: var(--neumo-navy);
+}
+
+#homepage-programs > li#onedash-menu-homepage4 {
+    border-color: var(--neumo-lilac);
+}
+
+#homepage-programs > li#onedash-menu-homepage5 {
+    border-color: var(--neumo-sunflower);
+}
+
+#homepage-programs > li .programCardIcon1,
+#homepage-programs > li .programCardIcon1.wrap-win-icon-RecruitmentManagement {
+    background-color: var(--neumo-purple);
+}
+
+#homepage-programs > li .programCardIcon2,
+#homepage-programs > li .programCardIcon2.wrap-win-icon-RecruitmentManagement {
+    background-color: var(--neumo-purple-dark);
+}
+
+#homepage-programs > li .programCardIcon3,
+#homepage-programs > li .programCardIcon3.wrap-win-icon-RecruitmentManagement {
+    background-color: var(--neumo-navy);
+}
+
+#homepage-programs > li .programCardIcon4,
+#homepage-programs > li .programCardIcon4.wrap-win-icon-RecruitmentManagement {
+    background-color: var(--neumo-purple);
+}
+
+#homepage-programs > li .programCardIcon5,
+#homepage-programs > li .programCardIcon5.wrap-win-icon-RecruitmentManagement {
+    background-color: var(--neumo-navy);
+}
+
+#homepage-programs > li h5 {
+    color: var(--neumo-ink);
+}
+
+/* Buttons */
+.cm-button,
+.cm-button-default,
+.cm-button-error,
+.cm-button-success {
+    background-color: var(--neumo-purple);
+    border-color: var(--neumo-purple);
+    color: #ffffff !important;
+    border-radius: 8px;
+}
+
+    .cm-button:hover,
+    .cm-button:focus,
+    .cm-button-default:hover,
+    .cm-button-default:focus,
+    .cm-button-error:hover,
+    .cm-button-error:focus,
+    .cm-button-success:hover,
+    .cm-button-success:focus {
+        background-color: var(--neumo-purple-dark) !important;
+        border-color: var(--neumo-purple-dark);
+        color: #ffffff !important;
+        font-size: 16px;
+        padding: 12px 20px;
+        border-radius: 8px;
+    }
+
+.cm-button-default-small,
+.cm-button-default-small:hover,
+.cm-button-default-small:focus {
+    padding: 6px 16px;
+    font-size: 12px;
+}
+
+.cm-button-danger {
+    background-color: #ffffff;
+    border: 1px solid var(--neumo-purple);
+    color: var(--neumo-purple-dark) !important;
+    border-radius: 8px;
+}
+
+    .cm-button-danger:hover,
+    .cm-button-danger:focus {
+        background-color: var(--neumo-purple-light);
+        border-color: var(--neumo-purple);
+        color: var(--neumo-purple-dark) !important;
+        font-size: 16px;
+        padding: 12px 20px;
+        border-radius: 8px;
+    }
+
+.btn-primary,
+.btn-secondary,
+.btn-info,
+.btn-success {
+    background-color: var(--neumo-purple);
+    border-color: var(--neumo-purple);
+    color: #ffffff;
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-secondary:hover,
+    .btn-secondary:focus,
+    .btn-info:hover,
+    .btn-info:focus,
+    .btn-success:hover,
+    .btn-success:focus {
+        background-color: var(--neumo-purple-dark);
+        border-color: var(--neumo-purple-dark);
+        color: #ffffff;
+    }
+
+/* Destructive actions stay distinct without leaving the palette */
+.btn-danger {
+    background-color: #ffffff;
+    border-color: var(--neumo-purple);
+    color: var(--neumo-purple-dark);
+}
+
+    .btn-danger:hover,
+    .btn-danger:focus {
+        background-color: var(--neumo-purple-light);
+        border-color: var(--neumo-purple);
+        color: var(--neumo-purple-dark);
+    }
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    background-color: var(--neumo-purple);
+    border-color: var(--neumo-purple);
+    color: #ffffff;
+}
+
+/* Tabs (Plans / Offers detail) */
+.nav-tabs .nav-link {
+    color: var(--neumo-gray);
+    background: var(--neumo-bg);
+    border-color: var(--neumo-line);
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    background: var(--neumo-purple) !important;
+    border-color: var(--neumo-purple) !important;
+    color: #ffffff !important;
+}
+
+.tabsborder {
+    border-color: var(--neumo-line);
+}
+
+/* Tables */
+.cm-table {
+    background: #ffffff !important;
+    color: var(--neumo-ink);
+}
+
+.cm-table-head th,
+.cm-table thead th {
+    background: var(--neumo-purple-light) !important;
+    color: var(--neumo-ink);
+    border-color: var(--neumo-line);
+}
+
+.cm-table td,
+.cm-table th {
+    border-color: var(--neumo-line);
+}
+
+.cm-table tbody tr:hover td {
+    background-color: var(--neumo-bg);
+}
+
+.cm-ellipsis a,
+.cm-minus-circle a,
+.cm-link-button {
+    color: var(--neumo-purple-dark) !important;
+}
+
+    .cm-link-button:hover,
+    .cm-link-button:focus {
+        color: var(--neumo-purple) !important;
+    }
+
+a.cm-dropdown-option {
+    color: var(--neumo-ink);
+}
+
+    a.cm-dropdown-option:hover,
+    a.cm-dropdown-option:focus {
+        color: var(--neumo-purple-dark) !important;
+    }
+
+.dropdown-menu {
+    border-color: var(--neumo-line);
+}
+
+/* Forms */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="date"],
+input[type="password"],
+select,
+textarea {
+    color: var(--neumo-ink);
+    border: 1px solid var(--neumo-line);
+    border-radius: 6px;
+}
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="number"]:focus,
+    input[type="date"]:focus,
+    input[type="password"]:focus,
+    select:focus,
+    textarea:focus {
+        border-color: var(--neumo-purple);
+        outline: 2px solid var(--neumo-purple-light);
+        outline-offset: 0;
+    }
+
+input:checked + .slider {
+    background-color: var(--neumo-purple);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--neumo-purple);
+}
+
+.red-star {
+    color: var(--neumo-purple-dark);
+}
+
+.ac-save-i {
+    background-color: var(--neumo-purple);
+}
+
+.bg-purple {
+    background-color: var(--neumo-purple);
+}
+
+/* Alerts keep semantic meaning, tuned to brand neutrals */
+.alert-danger,
+.alert-info {
+    background-color: var(--neumo-purple-light);
+    border-color: var(--neumo-purple);
+    color: var(--neumo-purple-dark);
+}
+
+#cookieConsent .close,
+#cookieConsent .close:hover {
+    color: var(--neumo-purple-dark);
+}
+
+/* Footer */
+.cm-footer,
+.cm-push {
+    background-color: #ffffff;
+    border-top: 1px solid var(--neumo-line);
+    color: var(--neumo-gray) !important;
+}
