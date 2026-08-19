@@ -10,7 +10,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  azureServiceConnection: 'saas-accelerator-prod-connection'
+  azureServiceConnection: 'saas-accelerator-sc'
   adminSiteAppName: 'neumosaasaccelerator-admin'
   customerSiteAppName: 'neumosaasaccelerator-portal'
 
