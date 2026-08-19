@@ -3,16 +3,15 @@ trigger:
     include:
       - main
 
-pr: none  # never runs on PRs, only on merged commits to main
+pr: none
 
 pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  buildConfiguration: 'Release'
-  azureServiceConnection: 'saas-accelerator-sc'
-  adminSiteAppName: 'neumosaasaccelerator-admin'
-  customerSiteAppName: 'neumosaasaccelerator-portal'
+  - group: saas-accelerator-vars
+  - name: buildConfiguration
+    value: 'Release'
 
 stages:
   - stage: Build
@@ -49,9 +48,11 @@ stages:
     dependsOn: Build
     jobs:
       - deployment: DeployToAzure
-        environment: 'production'   # this triggers the manual approval gate
+        environment: 'production'
         pool:
           vmImage: 'ubuntu-latest'
+        variables:
+          - group: saas-accelerator-vars   # variable groups don't auto-inherit into deployment jobs — must re-declare here
         strategy:
           runOnce:
             deploy:
