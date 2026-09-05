@@ -9,6 +9,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
+  - group: saas-accelerator-vars          # top-level default (POC) so $(azureServiceConnection) resolves at compile time; PROD stage overrides with its own group
   - name: buildConfiguration
     value: 'Release'
 
