@@ -49,7 +49,7 @@ stages:
     dependsOn: Build
     jobs:
       - deployment: DeployToPOC
-        environment: 'saas-poc'
+        environment: 'production'
         pool:
           vmImage: 'ubuntu-latest'
         variables:
@@ -80,7 +80,7 @@ stages:
     dependsOn: DeployPOC
     jobs:
       - deployment: DeployToPROD
-        environment: 'saas-prod'                  # add an Approval check on this environment in ADO
+        environment: 'PRD'                        # existing env with an Approval check (gates prod)
         pool:
           vmImage: 'ubuntu-latest'
         variables:
