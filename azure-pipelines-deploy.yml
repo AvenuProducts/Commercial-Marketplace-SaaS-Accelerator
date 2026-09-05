@@ -9,11 +9,11 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - group: saas-accelerator-vars
   - name: buildConfiguration
     value: 'Release'
 
 stages:
+  # ---------------- BUILD ONCE (.NET 10) ----------------
   - stage: Build
     jobs:
       - job: BuildAndPublish
@@ -44,32 +44,62 @@ stages:
           - publish: '$(Build.ArtifactStagingDirectory)'
             artifact: drop
 
-  - stage: Deploy
+  # ---------------- DEPLOY: POC (auto) ----------------
+  - stage: DeployPOC
     dependsOn: Build
     jobs:
-      - deployment: DeployToAzure
+      - deployment: DeployToPOC
         environment: 'production'
         pool:
           vmImage: 'ubuntu-latest'
         variables:
-          - group: saas-accelerator-vars   # variable groups don't auto-inherit into deployment jobs — must re-declare here
+          - group: saas-accelerator-vars          # POC values
         strategy:
           runOnce:
             deploy:
               steps:
                 - download: current
                   artifact: drop
-
                 - task: AzureWebApp@1
-                  displayName: 'Deploy AdminSite'
+                  displayName: 'Deploy AdminSite (POC)'
                   inputs:
                     azureSubscription: '$(azureServiceConnection)'
                     appType: 'webApp'
                     appName: '$(adminSiteAppName)'
                     package: '$(Pipeline.Workspace)/drop/AdminSite/**/*.zip'
-
                 - task: AzureWebApp@1
-                  displayName: 'Deploy CustomerSite'
+                  displayName: 'Deploy CustomerSite (POC)'
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    appType: 'webApp'
+                    appName: '$(customerSiteAppName)'
+                    package: '$(Pipeline.Workspace)/drop/CustomerSite/**/*.zip'
+
+  # ---------------- DEPLOY: PROD (gated by approval on the 'saas-prod' environment) ----------------
+  - stage: DeployPROD
+    dependsOn: DeployPOC
+    jobs:
+      - deployment: DeployToPROD
+        environment: 'PRD'                        # existing env with an Approval check (gates prod)
+        pool:
+          vmImage: 'ubuntu-latest'
+        variables:
+          - group: saas-accelerator-vars-prod     # PROD values
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+                - task: AzureWebApp@1
+                  displayName: 'Deploy AdminSite (PROD)'
+                  inputs:
+                    azureSubscription: '$(azureServiceConnection)'
+                    appType: 'webApp'
+                    appName: '$(adminSiteAppName)'
+                    package: '$(Pipeline.Workspace)/drop/AdminSite/**/*.zip'
+                - task: AzureWebApp@1
+                  displayName: 'Deploy CustomerSite (PROD)'
                   inputs:
                     azureSubscription: '$(azureServiceConnection)'
                     appType: 'webApp'
